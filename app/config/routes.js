@@ -1,4 +1,6 @@
 const usersController = require( "../controllers/usersController" );
+const productController = require( "../controllers/productController" );
+
 // add other controllers that are used
 
 const validateToken = require( "../middlewares/validateToken" );
@@ -21,7 +23,7 @@ const router = express.Router( );
 *    @apiParam {String} id  User ID required.
 *    @apiParam {String} name  Mandatory name.
 *    @apiParam {Number} age  Mandatory age. Minimum 18.
-*    @apiParam {String} sex  Mandatory sex.
+*    @apiParam {String} gender  Mandatory gender.
 *    @apiExample {response} Example response:
 *       {
 *         "user": {
@@ -29,12 +31,12 @@ const router = express.Router( );
 *            "username": "user123"
 *            "password": "pass123"
 *            "name": "Ana",
-*            "sex": "female",
+*            "gender": "female",
 *            "age": 30
 *           }
 *      }
 */
-router.post( "/users/registration", authorize, usersController.register );
+router.post( "/users/registration", usersController.register );
 
 /**
 *    @apiGroup User
@@ -58,7 +60,7 @@ router.post( "/users/login", authorize, usersController.login );
 *    @apiParam {String} id  User ID required.
 *    @apiParam {String} name  Mandatory name.
 *    @apiParam {Number} age  Mandatory age. Minimum 18.
-*    @apiParam {String} sex  Mandatory sex.
+*    @apiParam {String} gender  Mandatory gender.
 */
 router.put( "/users/edit", authorize, validateToken, usersController.edit );
 
@@ -72,6 +74,11 @@ router.put( "/users/edit", authorize, validateToken, usersController.edit );
 *       }
 */
 router.delete( "/users/delete", authorize, validateToken, usersController.delete );
+
+router.post( "/products/create", authorize, productController.create );
+// ... add crud for products
+
+// ... add crud for cart
 
 router.get( "/test", ( req, res ) => {
     res.json( { success: true } );

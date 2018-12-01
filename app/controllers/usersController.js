@@ -13,6 +13,7 @@ exports.register = ( req, res ) => {
         return;
     }
     user = new User( req.body );
+    user.setId( );
     user.setPass( req.body.password );
     user.save( ( err, savedUser ) => {
         if ( err ) {
@@ -53,27 +54,9 @@ exports.login = ( req, res ) => {
 };
 
 exports.edit = ( req, res ) => {
-    const { user } = req;
-    const { name, sex, age } = req.body;
-
-    user.name = name;
-    user.sex = sex;
-    user.age = age;
-
-    user.save( ( err, savedUser ) => {
-        if ( err ) {
-            return res.validationError( err );
-        }
-        return res.success( extractObject(
-            savedUser,
-            [ "id", "name", "age", "sex" ],
-        ) );
-    } );
+    res.success( );
 };
 
 exports.delete = ( req, res ) => {
-    const { user } = req;
-
-    user.remove( );
     res.success( );
 };
